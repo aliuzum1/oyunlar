@@ -87,8 +87,6 @@
         .btn-primary { background-color: var(--accent-color); }
         .btn-primary:hover { background-color: var(--accent-hover); }
         .btn-danger { background-color: var(--danger-color); }
-        .btn-secondary { background-color: #475569; }
-        .btn-secondary:hover { background-color: #64748b; }
 
         /* Sayfa İçerik Alanları */
         .page-content {
@@ -98,7 +96,15 @@
             display: block;
         }
 
-        /* Anasayfa Oyun Grid Tasarımı (Logo ve Kısim İsmi) */
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        /* Anasayfa Oyun Grid Tasarımı */
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -116,7 +122,6 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
         }
 
         .game-card:hover {
@@ -210,13 +215,6 @@
             border-color: var(--accent-color);
         }
 
-        .file-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
         /* Oyun Oynatıcı Modal */
         .modal {
             display: none;
@@ -273,10 +271,11 @@
         </nav>
     </header>
 
-    <!-- 1. ANASAYFA (Sadece Logo ve Max 3 Kelimelik İsim) -->
+    <!-- 1. ANASAYFA -->
     <div id="page-home" class="page-content active">
+        <div class="section-title">Oyunlar</div>
         <div class="game-grid" id="gameGrid">
-            <!-- Oyunlar buraya gelecek -->
+            <div class="empty-state">Yükleniyor...</div>
         </div>
     </div>
 
@@ -286,18 +285,13 @@
             <h2>➕ Yeni Oyun Ekle</h2>
             <div class="input-group">
                 <input type="url" id="gameUrl" placeholder="Oyun URL adresi (örn: https://ornekoyun.com/oyna)" required>
-                <textarea id="gameDesc" placeholder="Oyun hakkında kısa açıklama..." rows="2"></textarea>
-                <button class="btn btn-primary" onclick="addGame()">Oyunu Kaydet ve Ekle</button>
-            </div>
-            <div class="file-actions" style="margin-top: 25px;">
-                <button class="btn btn-secondary" onclick="exportToFile()">📥 Oyunları Yedekle (JSON)</button>
-                <input type="file" id="fileInput" accept=".json" style="display:none" onchange="importFromFile(event)">
-                <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">📂 Yedekten Yükle</button>
+                <input type="password" id="gamePassword" placeholder="Bu oyunu silmek için kullanılacak şifre" required>
+                <button class="btn btn-primary" onclick="addGameLocal()">Oyunu Kaydet ve Ekle</button>
             </div>
         </div>
     </div>
 
-    <!-- 3. AÇIKLAMALAR SAYFASI -->
+    <!-- 3. AÇIKLAMALAR -->
     <div id="page-about" class="page-content">
         <div class="info-card">
             <h2>ℹ️ Açıklamalar</h2>
@@ -306,26 +300,26 @@
         </div>
     </div>
 
-    <!-- 4. YASAL METİNLER SAYFASI -->
+    <!-- 4. YASAL METİNLER -->
     <div id="page-legal" class="page-content">
         <div class="info-card">
             <h2>📜 Yasal Metinler ve Gizlilik</h2>
             <p><strong>Kullanım Şartları:</strong> Platform üzerinden erişilen harici oyunların telif hakları ve sorumlulukları ilgili oyun sağlayıcılarına aittir.</p>
-            <p><strong>Gizlilik:</strong> Eklenen tüm veriler yalnızca tarayıcınızın yerel hafızasında saklanır; harici sunucularda veri depolanmaz.</p>
+            <p><strong>Gizlilik:</strong> Eklenen veriler tarayıcınızın yerel hafızasında güvenle saklanır.</p>
         </div>
     </div>
 
-    <!-- 5. İLETİŞİM SAYFASI -->
+    <!-- 5. İLETİŞİM -->
     <div id="page-contact" class="page-content">
         <div class="info-card">
             <h2>📞 İletişim Kutusu</h2>
-            <p>Görüş, öneri veya bildirimleriniz için aşağıdaki formu kullanabilirsiniz:</p>
-            <div class="input-group">
-                <input type="text" id="contactName" placeholder="Adınız Soyadınız">
-                <input type="email" id="contactEmail" placeholder="E-Posta Adresiniz">
-                <textarea id="contactMessage" placeholder="Mesajınız..." rows="4"></textarea>
-                <button class="btn btn-primary" onclick="sendContact()">Gönder</button>
-            </div>
+            <p>Görüş, öneri veya bildirimleriniz için formu doldurabilirsiniz:</p>
+            <form action="https://formspree.io/f/xnjedlwa" method="POST" class="input-group" onsubmit="handleContactSubmit(event)">
+                <input type="text" name="name" id="contactName" placeholder="Adınız Soyadınız" required>
+                <input type="email" name="email" id="contactEmail" placeholder="E-Posta Adresiniz" required>
+                <textarea name="message" id="contactMessage" placeholder="Mesajınız..." rows="4" required></textarea>
+                <button type="submit" class="btn btn-primary">Gönder</button>
+            </form>
         </div>
     </div>
 </div>
@@ -345,15 +339,15 @@
     let games = [];
 
     window.onload = function() {
-        const savedGames = localStorage.getItem('arcade_games');
-        if (savedGames) {
+        const saved = localStorage.getItem('local_arcade_games');
+        if (saved) {
             try {
-                games = JSON.parse(savedGames);
+                games = JSON.parse(saved);
             } catch(e) {
                 games = [];
             }
         }
-        renderGames();
+        renderGames(games);
     };
 
     function switchPage(pageId) {
@@ -361,16 +355,28 @@
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
         document.getElementById('page-' + pageId).classList.add('active');
-        event.currentTarget.classList.add('active');
+        
+        const buttons = document.querySelectorAll('.nav-btn');
+        if (pageId === 'home') buttons[0].classList.add('active');
+        if (pageId === 'add') buttons[1].classList.add('active');
+        if (pageId === 'about') buttons[2].classList.add('active');
+        if (pageId === 'legal') buttons[3].classList.add('active');
+        if (pageId === 'contact') buttons[4].classList.add('active');
     }
 
-    function addGame() {
+    function addGameLocal() {
         const urlInput = document.getElementById('gameUrl');
-        const descInput = document.getElementById('gameDesc');
+        const passInput = document.getElementById('gamePassword');
         let url = urlInput.value.trim();
+        let password = passInput.value.trim();
 
         if (!url) {
             alert('Lütfen geçerli bir oyun URL\'si girin!');
+            return;
+        }
+
+        if (!password) {
+            alert('Lütfen oyunu silmek için bir şifre girin!');
             return;
         }
 
@@ -383,57 +389,55 @@
             const domain = urlObj.hostname;
             const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 
-            // İsmi en fazla 3 kelime olacak şekilde düzenle
             let rawName = domain.replace('www.', '').split('.')[0];
             let words = rawName.replace(/[-_]/g, ' ').split(' ');
             let shortTitle = words.slice(0, 3).join(' ');
-            // İlk harfleri büyük yap
             shortTitle = shortTitle.charAt(0).toUpperCase() + shortTitle.slice(1);
 
             games.push({
                 url: url,
                 domain: domain,
                 title: shortTitle,
-                favicon: faviconUrl
+                favicon: faviconUrl,
+                password: password
             });
 
+            localStorage.setItem('local_arcade_games', JSON.stringify(games));
+            renderGames(games);
+
             urlInput.value = '';
-            descInput.value = '';
-            saveAndRender();
-            
-            // Başarılı eklemeden sonra anasayfaya yönlendir
-            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('page-home').classList.add('active');
-            document.querySelector('nav button').classList.add('active');
+            passInput.value = '';
+            switchPage('home');
         } catch(e) {
             alert('Geçersiz URL formatı!');
         }
     }
 
-    function deleteGame(index, event) {
+    function deleteGameLocal(index, event) {
         event.stopPropagation();
-        if (confirm("Bu oyunu silmek istediğinize emin misiniz?")) {
+        const enteredPass = prompt("Bu oyunu silmek için eklerken belirlediğiniz şifreyi girin:");
+        if (enteredPass === null) return;
+
+        if (games[index].password === enteredPass) {
             games.splice(index, 1);
-            saveAndRender();
+            localStorage.setItem('local_arcade_games', JSON.stringify(games));
+            renderGames(games);
+            alert('Oyun başarıyla silindi.');
+        } else {
+            alert('Hatalı şifre! Bu oyunu silme yetkiniz yok.');
         }
     }
 
-    function saveAndRender() {
-        localStorage.setItem('arcade_games', JSON.stringify(games));
-        renderGames();
-    }
-
-    function renderGames() {
+    function renderGames(data) {
         const grid = document.getElementById('gameGrid');
         grid.innerHTML = '';
 
-        if (games.length === 0) {
+        if (!data || data.length === 0) {
             grid.innerHTML = '<div class="empty-state">Henüz eklenmiş oyun yok. Üst menüden "Oyun URL Ekle" seçeneğini kullanabilirsiniz.</div>';
             return;
         }
 
-        games.forEach((game, index) => {
+        data.forEach((game, index) => {
             const card = document.createElement('div');
             card.className = 'game-card';
             card.onclick = () => openGameModal(game.url, game.title);
@@ -443,7 +447,7 @@
                 <div class="game-title" title="${game.title}">${game.title}</div>
                 <div class="card-actions">
                     <button class="btn-sm btn-play">Oyna</button>
-                    <button class="btn-sm btn-del" onclick="deleteGame(${index}, event)">Sil</button>
+                    <button class="btn-sm btn-del" onclick="deleteGameLocal(${index}, event)">Sil</button>
                 </div>
             `;
             grid.appendChild(card);
@@ -461,57 +465,29 @@
         document.getElementById('gameModal').classList.remove('active');
     }
 
-    function sendContact() {
-        const name = document.getElementById('contactName').value.trim();
-        const email = document.getElementById('contactEmail').value.trim();
-        const msg = document.getElementById('contactMessage').value.trim();
+    async function handleContactSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
 
-        if (!name || !email || !msg) {
-            alert('Lütfen tüm alanları doldurunuz.');
-            return;
-        }
-
-        alert('Mesajınız başarıyla iletildi!');
-        document.getElementById('contactName').value = '';
-        document.getElementById('contactEmail').value = '';
-        document.getElementById('contactMessage').value = '';
-    }
-
-    function exportToFile() {
-        if (games.length === 0) {
-            alert('Yedeklenecek oyun yok!');
-            return;
-        }
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(games, null, 2));
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", "oyunlar_yedek.json");
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-    }
-
-    function importFromFile(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const imported = JSON.parse(e.target.result);
-                if (Array.isArray(imported)) {
-                    games = imported;
-                    saveAndRender();
-                    alert('Oyunlar başarıyla yüklendi!');
-                } else {
-                    alert('Geçersiz dosya!');
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
                 }
-            } catch(err) {
-                alert('Dosya okunurken hata oluştu!');
+            });
+
+            if (response.ok) {
+                alert('Mesajınız başarıyla iletildi!');
+                form.reset();
+            } else {
+                alert('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
             }
-        };
-        reader.readAsText(file);
-        event.target.value = '';
+        } catch (error) {
+            alert('Bağlantı hatası oluştu.');
+        }
     }
 </script>
 
