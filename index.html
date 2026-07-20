@@ -13,7 +13,6 @@
             --accent-hover: #4f46e5;
             --border-color: #334155;
             --danger-color: #ef4444;
-            --danger-hover: #dc2626;
             --success-color: #10b981;
         }
 
@@ -38,7 +37,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 15px;
             flex-wrap: wrap;
@@ -49,9 +48,6 @@
             margin: 0;
             font-size: 22px;
             color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         nav {
@@ -91,7 +87,6 @@
         .btn-primary { background-color: var(--accent-color); }
         .btn-primary:hover { background-color: var(--accent-hover); }
         .btn-danger { background-color: var(--danger-color); }
-        .btn-danger:hover { background-color: var(--danger-hover); }
         .btn-secondary { background-color: #475569; }
         .btn-secondary:hover { background-color: #64748b; }
 
@@ -103,20 +98,92 @@
             display: block;
         }
 
-        /* Oyun Ekleme Paneli */
-        .add-game-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        /* Anasayfa Oyun Grid Tasarımı (Logo ve Kısim İsmi) */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
         }
 
-        .add-game-section h3 {
+        .game-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-color);
+        }
+
+        .game-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: #ffffff;
+            padding: 4px;
+            margin-bottom: 12px;
+        }
+
+        .game-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .btn-sm {
+            flex: 1;
+            padding: 6px;
+            font-size: 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+        }
+
+        .btn-play { background-color: var(--success-color); }
+        .btn-del { background-color: var(--danger-color); }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #64748b;
+            padding: 40px;
+            font-size: 16px;
+        }
+
+        /* Form ve Bilgi Sayfaları */
+        .form-card, .info-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .form-card h2, .info-card h2 {
             margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 18px;
             color: #fff;
         }
 
@@ -124,6 +191,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            margin-top: 15px;
         }
 
         input, textarea {
@@ -136,7 +204,6 @@
             font-size: 15px;
             outline: none;
             box-sizing: border-box;
-            transition: border-color 0.2s;
         }
 
         input:focus, textarea:focus {
@@ -150,118 +217,7 @@
             flex-wrap: wrap;
         }
 
-        /* Oyun Listesi Grid Tasarımı */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .game-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .game-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .game-header {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            gap: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .game-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            object-fit: contain;
-            background: #ffffff;
-            padding: 3px;
-            flex-shrink: 0;
-        }
-
-        .game-meta {
-            min-width: 0;
-            flex: 1;
-        }
-
-        .game-title {
-            font-weight: 600;
-            font-size: 16px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #fff;
-        }
-
-        .game-domain {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .game-body {
-            padding: 16px;
-            font-size: 14px;
-            color: #cbd5e1;
-            flex: 1;
-            word-break: break-word;
-        }
-
-        .game-footer {
-            padding: 12px 16px;
-            background-color: rgba(0,0,0,0.2);
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-play {
-            flex: 1;
-            background-color: var(--success-color);
-            text-align: center;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .btn-play:hover { opacity: 0.9; }
-
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #64748b;
-            padding: 40px;
-            font-size: 16px;
-        }
-
-        /* Bilgi Sayfaları Tasarımı */
-        .info-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 12px;
-            line-height: 1.6;
-        }
-
-        .info-card h2 {
-            margin-top: 0;
-            color: #fff;
-        }
-
-        /* Oyun Oynatıcı Modal Ekranı */
+        /* Oyun Oynatıcı Modal */
         .modal {
             display: none;
             position: fixed;
@@ -310,59 +266,61 @@
         <h1>🎮 Oyun Portalı</h1>
         <nav>
             <button class="nav-btn active" onclick="switchPage('home')">Anasayfa</button>
+            <button class="nav-btn" onclick="switchPage('add')">Oyun URL Ekle</button>
             <button class="nav-btn" onclick="switchPage('about')">Açıklamalar</button>
             <button class="nav-btn" onclick="switchPage('legal')">Yasal Metinler</button>
             <button class="nav-btn" onclick="switchPage('contact')">İletişim</button>
         </nav>
     </header>
 
-    <!-- 1. ANASAYFA -->
+    <!-- 1. ANASAYFA (Sadece Logo ve Max 3 Kelimelik İsim) -->
     <div id="page-home" class="page-content active">
-        <!-- Oyun Ekleme Alanı -->
-        <div class="add-game-section">
-            <h3>➕ Yeni Oyun Ekle</h3>
+        <div class="game-grid" id="gameGrid">
+            <!-- Oyunlar buraya gelecek -->
+        </div>
+    </div>
+
+    <!-- 2. OYUN URL EKLE SAYFASI -->
+    <div id="page-add" class="page-content">
+        <div class="form-card">
+            <h2>➕ Yeni Oyun Ekle</h2>
             <div class="input-group">
                 <input type="url" id="gameUrl" placeholder="Oyun URL adresi (örn: https://ornekoyun.com/oyna)" required>
                 <textarea id="gameDesc" placeholder="Oyun hakkında kısa açıklama..." rows="2"></textarea>
-                <button class="btn btn-primary" onclick="addGame()">Oyunu Ekle</button>
+                <button class="btn btn-primary" onclick="addGame()">Oyunu Kaydet ve Ekle</button>
             </div>
-            <div class="file-actions">
+            <div class="file-actions" style="margin-top: 25px;">
                 <button class="btn btn-secondary" onclick="exportToFile()">📥 Oyunları Yedekle (JSON)</button>
                 <input type="file" id="fileInput" accept=".json" style="display:none" onchange="importFromFile(event)">
                 <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">📂 Yedekten Yükle</button>
             </div>
         </div>
-
-        <!-- Eklenen Oyunların Listelendiği Alan -->
-        <div class="game-grid" id="gameGrid">
-            <!-- Kartlar buraya dinamik eklenecek -->
-        </div>
     </div>
 
-    <!-- 2. AÇIKLAMALAR -->
+    <!-- 3. AÇIKLAMALAR SAYFASI -->
     <div id="page-about" class="page-content">
         <div class="info-card">
             <h2>ℹ️ Açıklamalar</h2>
-            <p>Bu platform, kullanıcıların sevdikleri web tabanlı oyunların URL'lerini tek bir yerde toplayıp kolayca paylaşabilmesi ve site içerisinden oynatabilmesi için geliştirilmiştir.</p>
-            <p>Eklenen oyunların logoları otomatik olarak çekilir ve kartlar şeklinde sıralanır. İstediğiniz zaman oyunları kendi ekranınızda yönetebilir veya yedekleyebilirsiniz.</p>
+            <p>Bu platform, favori web tabanlı oyunlarınızı tek bir sayfada sade bir şekilde listelemeniz ve site içinden hızlıca oynamanız için tasarlanmıştır.</p>
+            <p>Eklenen oyunların logoları otomatik olarak çekilir ve kartlar üzerinde en fazla 3 kelimelik isimleriyle yer alır.</p>
         </div>
     </div>
 
-    <!-- 3. YASAL METİNLER -->
+    <!-- 4. YASAL METİNLER SAYFASI -->
     <div id="page-legal" class="page-content">
         <div class="info-card">
             <h2>📜 Yasal Metinler ve Gizlilik</h2>
-            <p><strong>Kullanım Şartları:</strong> Bu siteye eklenen dış kaynaklı oyun linklerinin içeriklerinden site sahipleri sorumlu değildir. Tüm sorumluluk ilgili oyunların sağlayıcılarına aittir.</p>
-            <p><strong>Gizlilik Politikası:</strong> Eklenen veriler yalnızca sizin tarayıcınızın yerel hafızasında (localStorage) saklanır. Sunucularda herhangi bir kişisel veri toplanmaz.</p>
+            <p><strong>Kullanım Şartları:</strong> Platform üzerinden erişilen harici oyunların telif hakları ve sorumlulukları ilgili oyun sağlayıcılarına aittir.</p>
+            <p><strong>Gizlilik:</strong> Eklenen tüm veriler yalnızca tarayıcınızın yerel hafızasında saklanır; harici sunucularda veri depolanmaz.</p>
         </div>
     </div>
 
-    <!-- 4. İLETİŞİM -->
+    <!-- 5. İLETİŞİM SAYFASI -->
     <div id="page-contact" class="page-content">
         <div class="info-card">
             <h2>📞 İletişim Kutusu</h2>
-            <p>Bizimle iletişime geçmek veya geri bildirimde bulunmak için aşağıdaki formu doldurabilirsiniz:</p>
-            <div class="input-group" style="margin-top: 15px;">
+            <p>Görüş, öneri veya bildirimleriniz için aşağıdaki formu kullanabilirsiniz:</p>
+            <div class="input-group">
                 <input type="text" id="contactName" placeholder="Adınız Soyadınız">
                 <input type="email" id="contactEmail" placeholder="E-Posta Adresiniz">
                 <textarea id="contactMessage" placeholder="Mesajınız..." rows="4"></textarea>
@@ -372,11 +330,11 @@
     </div>
 </div>
 
-<!-- Oyun Çalıştırma Modalı -->
+<!-- Oyun Oynatıcı Modal -->
 <div class="modal" id="gameModal">
     <div class="modal-header">
         <span class="modal-title" id="modalGameTitle">Oyun Yükleniyor...</span>
-        <button class="btn btn-danger" onclick="closeGameModal()">Kapat ✖</button>
+        <button class="btn btn-danger" onclick="closeGameModal()" style="padding: 6px 12px; font-size: 13px;">Kapat ✖</button>
     </div>
     <div class="modal-body">
         <iframe id="gameIframe" src=""></iframe>
@@ -386,7 +344,6 @@
 <script>
     let games = [];
 
-    // Sayfa Yüklendiğinde
     window.onload = function() {
         const savedGames = localStorage.getItem('arcade_games');
         if (savedGames) {
@@ -399,25 +356,18 @@
         renderGames();
     };
 
-    // Sekmeler Arası Geçiş (Sayfalar)
     function switchPage(pageId) {
-        document.querySelectorAll('.page-content').forEach(page => {
-            page.classList.remove('active');
-        });
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
         document.getElementById('page-' + pageId).classList.add('active');
         event.currentTarget.classList.add('active');
     }
 
-    // Oyun Ekleme
     function addGame() {
         const urlInput = document.getElementById('gameUrl');
         const descInput = document.getElementById('gameDesc');
         let url = urlInput.value.trim();
-        let desc = descInput.value.trim() || "Açıklama girilmedi.";
 
         if (!url) {
             alert('Lütfen geçerli bir oyun URL\'si girin!');
@@ -433,25 +383,37 @@
             const domain = urlObj.hostname;
             const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 
+            // İsmi en fazla 3 kelime olacak şekilde düzenle
+            let rawName = domain.replace('www.', '').split('.')[0];
+            let words = rawName.replace(/[-_]/g, ' ').split(' ');
+            let shortTitle = words.slice(0, 3).join(' ');
+            // İlk harfleri büyük yap
+            shortTitle = shortTitle.charAt(0).toUpperCase() + shortTitle.slice(1);
+
             games.push({
                 url: url,
                 domain: domain,
-                title: domain.replace('www.', ''),
-                desc: desc,
+                title: shortTitle,
                 favicon: faviconUrl
             });
 
             urlInput.value = '';
             descInput.value = '';
             saveAndRender();
+            
+            // Başarılı eklemeden sonra anasayfaya yönlendir
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-home').classList.add('active');
+            document.querySelector('nav button').classList.add('active');
         } catch(e) {
             alert('Geçersiz URL formatı!');
         }
     }
 
-    // Oyun Silme
-    function deleteGame(index) {
-        if (confirm("Bu oyunu listeden silmek istediğinize emin misiniz?")) {
+    function deleteGame(index, event) {
+        event.stopPropagation();
+        if (confirm("Bu oyunu silmek istediğinize emin misiniz?")) {
             games.splice(index, 1);
             saveAndRender();
         }
@@ -462,60 +424,43 @@
         renderGames();
     }
 
-    // Ekranda Listeleme
     function renderGames() {
         const grid = document.getElementById('gameGrid');
         grid.innerHTML = '';
 
         if (games.length === 0) {
-            grid.innerHTML = '<div class="empty-state">Henüz eklenmiş bir oyun bulunmuyor. Anasayfadaki formu kullanarak ilk oyunu siz ekleyin!</div>';
+            grid.innerHTML = '<div class="empty-state">Henüz eklenmiş oyun yok. Üst menüden "Oyun URL Ekle" seçeneğini kullanabilirsiniz.</div>';
             return;
         }
 
         games.forEach((game, index) => {
             const card = document.createElement('div');
             card.className = 'game-card';
+            card.onclick = () => openGameModal(game.url, game.title);
 
             card.innerHTML = `
-                <div class="game-header">
-                    <img src="${game.favicon}" alt="Logo" class="game-logo" onerror="this.src='https://via.placeholder.com/40'">
-                    <div class="game-meta">
-                        <div class="game-title">${game.title}</div>
-                        <div class="game-domain">${game.domain}</div>
-                    </div>
-                </div>
-                <div class="game-body">
-                    ${game.desc}
-                </div>
-                <div class="game-footer">
-                    <button class="btn-play" onclick="openGameModal('${game.url}', '${game.title}')">Oyna 🎮</button>
-                    <button class="btn btn-danger" style="padding: 6px 12px; font-size:12px;" onclick="deleteGame(${index})">Sil</button>
+                <img src="${game.favicon}" alt="Logo" class="game-logo" onerror="this.src='https://via.placeholder.com/48'">
+                <div class="game-title" title="${game.title}">${game.title}</div>
+                <div class="card-actions">
+                    <button class="btn-sm btn-play">Oyna</button>
+                    <button class="btn-sm btn-del" onclick="deleteGame(${index}, event)">Sil</button>
                 </div>
             `;
             grid.appendChild(card);
         });
     }
 
-    // Oyun İçi Oynatıcıyı Aç (Modal)
     function openGameModal(url, title) {
-        const modal = document.getElementById('gameModal');
-        const iframe = document.getElementById('gameIframe');
-        const titleSpan = document.getElementById('modalGameTitle');
-
-        titleSpan.innerText = title;
-        iframe.src = url;
-        modal.classList.add('active');
+        document.getElementById('modalGameTitle').innerText = title;
+        document.getElementById('gameIframe').src = url;
+        document.getElementById('gameModal').classList.add('active');
     }
 
-    // Oyunu Kapat
     function closeGameModal() {
-        const modal = document.getElementById('gameModal');
-        const iframe = document.getElementById('gameIframe');
-        iframe.src = '';
-        modal.classList.remove('active');
+        document.getElementById('gameIframe').src = '';
+        document.getElementById('gameModal').classList.remove('active');
     }
 
-    // İletişim Formu Gönder
     function sendContact() {
         const name = document.getElementById('contactName').value.trim();
         const email = document.getElementById('contactEmail').value.trim();
@@ -532,7 +477,6 @@
         document.getElementById('contactMessage').value = '';
     }
 
-    // Yedekleme (JSON İndir)
     function exportToFile() {
         if (games.length === 0) {
             alert('Yedeklenecek oyun yok!');
@@ -547,7 +491,6 @@
         downloadAnchor.remove();
     }
 
-    // Yedekten Geri Yükle
     function importFromFile(event) {
         const file = event.target.files[0];
         if (!file) return;
