@@ -3,7 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oyun Portalı</title>
+    <title>Oyun Portalı | Ücretsiz Çevrimiçi Tarayıcı Oyunları</title>
+    
+    <!-- Google AdSense Doğrulama ve Hesap Etiketi -->
+    <meta name="google-adsense-account" content="ca-pub-4346551902420368">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4346551902420368" crossorigin="anonymous"></script>
+
+    <!-- SEO Meta Etiketleri -->
+    <meta name="description" content="En popüler web tabanlı ve tarayıcı oyunlarını askolperl.org.tr üzerinden tek tıkla ücretsiz oynayın. Kendi favori oyununuzu kolayca ekleyin ve keşfedin.">
+    <meta name="keywords" content="oyun oyna, web oyunları, tarayıcı oyunları, ücretsiz oyun portalı, online oyunlar, askolperl">
+    <meta name="author" content="Oyun Portalı">
+    <link rel="canonical" href="https://askolperl.org.tr/">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Sosyal Medya Meta Etiketleri -->
+    <meta property="og:title" content="Oyun Portalı | Ücretsiz Çevrimiçi Tarayıcı Oyunları">
+    <meta property="og:description" content="En popüler web tabanlı ve tarayıcı oyunlarını tek tıkla ücretsiz oynayın.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://askolperl.org.tr/">
+    <meta property="og:locale" content="tr_TR">
+
+    <!-- Geo (Coğrafi SEO) Etiketleri - Türkiye Hedefli -->
+    <meta name="geo.region" content="TR">
+    <meta name="geo.placename" content="Türkiye">
+    <meta name="geo.position" content="39.1667;35.6667">
+    <meta name="ICBM" content="39.1667, 35.6667">
+    <meta http-equiv="content-language" content="tr">
+
+    <!-- Yapısal Veri (Schema.org JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Oyun Portalı",
+      "url": "https://askolperl.org.tr/",
+      "inLanguage": "tr",
+      "description": "Ücretsiz web tabanlı tarayıcı oyunları portalı."
+    }
+    </script>
+
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -37,7 +75,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 15px;
             flex-wrap: wrap;
@@ -102,6 +140,19 @@
             color: #fff;
             border-left: 4px solid var(--accent-color);
             padding-left: 10px;
+        }
+
+        /* Reklam Alanı Tasarımı */
+        .ad-container {
+            width: 100%;
+            background-color: #131c31;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         /* Anasayfa Oyun Grid Tasarımı */
@@ -259,10 +310,10 @@
 </head>
 <body>
 
-<div class="container">
+<main class="container">
     <header>
         <h1>🎮 Oyun Portalı</h1>
-        <nav>
+        <nav aria-label="Ana Menü">
             <button class="nav-btn active" onclick="switchPage('home')">Anasayfa</button>
             <button class="nav-btn" onclick="switchPage('add')">Oyun URL Ekle</button>
             <button class="nav-btn" onclick="switchPage('about')">Açıklamalar</button>
@@ -270,6 +321,21 @@
             <button class="nav-btn" onclick="switchPage('contact')">İletişim</button>
         </nav>
     </header>
+
+    <!-- Üst Google AdSense Reklam Alanı -->
+    <div class="ad-container">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4346551902420368" crossorigin="anonymous"></script>
+        <!-- Üst Banner Reklam Birimi -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4346551902420368"
+             data-ad-slot="8439247854"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 
     <!-- 1. ANASAYFA -->
     <div id="page-home" class="page-content active">
@@ -295,7 +361,7 @@
     <div id="page-about" class="page-content">
         <div class="info-card">
             <h2>ℹ️ Açıklamalar</h2>
-            <p>Bu platform, favori web tabanlı oyunlarınızı tek bir sayfada sade bir şekilde listelemeniz ve site içinden hızlıca oynamanız için tasarlanmıştır.</p>
+            <p>Bu platform, favori web tabanlı oyunlarınızı askolperl.org.tr üzerinde tek bir sayfada sade bir şekilde listelemeniz ve site içinden hızlıca oynamanız için tasarlanmıştır.</p>
             <p>Eklenen oyunların logoları otomatik olarak çekilir ve kartlar üzerinde en fazla 3 kelimelik isimleriyle yer alır.</p>
         </div>
     </div>
@@ -322,16 +388,31 @@
             </form>
         </div>
     </div>
-</div>
+
+    <!-- Alt Google AdSense Reklam Alanı -->
+    <div class="ad-container" style="margin-top: 30px;">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4346551902420368" crossorigin="anonymous"></script>
+        <!-- Alt Banner Reklam Birimi -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4346551902420368"
+             data-ad-slot="8439247854"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</main>
 
 <!-- Oyun Oynatıcı Modal -->
-<div class="modal" id="gameModal">
+<div class="modal" id="gameModal" role="dialog" aria-modal="true">
     <div class="modal-header">
         <span class="modal-title" id="modalGameTitle">Oyun Yükleniyor...</span>
         <button class="btn btn-danger" onclick="closeGameModal()" style="padding: 6px 12px; font-size: 13px;">Kapat ✖</button>
     </div>
     <div class="modal-body">
-        <iframe id="gameIframe" src=""></iframe>
+        <iframe id="gameIframe" src="" title="Oyun Ekranı"></iframe>
     </div>
 </div>
 
@@ -443,7 +524,7 @@
             card.onclick = () => openGameModal(game.url, game.title);
 
             card.innerHTML = `
-                <img src="${game.favicon}" alt="Logo" class="game-logo" onerror="this.src='https://via.placeholder.com/48'">
+                <img src="${game.favicon}" alt="${game.title} Logo" class="game-logo" onerror="this.src='https://via.placeholder.com/48'">
                 <div class="game-title" title="${game.title}">${game.title}</div>
                 <div class="card-actions">
                     <button class="btn-sm btn-play">Oyna</button>
@@ -471,7 +552,7 @@
         const formData = new FormData(form);
 
         try {
-            const response = await fetch(form.action, {
+            const response = action = await fetch(form.action, {
                 method: 'POST',
                 body: formData,
                 headers: {
