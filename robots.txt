@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://oyunlar.askolperl.org.tr/sitemap.xml
